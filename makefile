@@ -1,17 +1,21 @@
 # Variables de compilación
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11 -I/usr/local/include
-LDFLAGS = -L/usr/local/lib -lgtest -lgtest_main -lpthread
+CXXFLAGS = -Wall -Wextra -std=c++11 -I/usr/local/include -I./src 
+LDFLAGS = -L/usr/local/lib -lgtest -lgtest_main -lpthread -lbenchmark
 
 # Archivos de origen y ejecutables
-SRCS = main.cpp lista_enlazada.cpp
-TEST_SRCS = test_LE.cpp
+SRCS = $(wildcard ./src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
-TEST_OBJS = $(TEST_SRCS:.cpp=.o)
-EXEC = my_program
-TEST_EXEC = test_program
 
-# Objetivo principal: solo compila el programa principal si pasan las pruebas
+# Archivos de prueba y sus ejecutables
+TEST_SRCS = ./tests/test_cola.cpp ./tests/test_informe.cpp ./tests/test_colec.cpp
+TEST_OBJS = $(TEST_SRCS:.cpp=.o)
+TEST_EXECS = $(TEST_SRCS:.cpp=.out)
+
+# Ejecutable principal
+EXEC = main
+
+# Objetivo principal: compila el programa principal solo si pasan las pruebas
 all: test $(EXEC)
 
 # Compilar el programa principal
@@ -19,28 +23,33 @@ $(EXEC): $(OBJS)
 	@echo "Compilando el programa principal..."
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compilar el programa de prueba
-$(TEST_EXEC): $(OBJS) $(TEST_OBJS)
-	@echo "Compilando el ejecutable de pruebas..."
+# Compilar y ejecutar las pruebas
+test: $(TEST_EXECS)
+	@echo "Ejecutando todas las pruebas..."
+	@for exec in $(TEST_EXECS); do ./$$exec || exit 1; done
+
+# Compilar cada prueba individual
+./tests/test_cola.out: ./tests/test_cola.cpp $(OBJS)
+	@echo "Compilando test_cola..."
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Ejecutar las pruebas y detener en caso de error
-test: $(TEST_EXEC)
-	@echo "Ejecutando pruebas..."
-	./$(TEST_EXEC)
+./tests/test_informe.out: ./tests/test_informe.cpp $(OBJS)
+	@echo "Compilando test_informe..."
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Este objetivo solo se ejecuta si `test` pasa (usado por `all`)
-$(EXEC): test
+./tests/test_colec.out: ./tests/test_colec.cpp $(OBJS)
+	@echo "Compilando test_colec..."
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Compilar archivos .o a partir de .cpp
-%.o: %.cpp
+# Compilar archivos .o a partir de .cpp en src
+./src/%.o: ./src/%.cpp
 	@echo "Compilando $<..."
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Limpiar archivos generados
 clean:
 	@echo "Limpiando archivos generados..."
-	rm -f $(OBJS) $(TEST_OBJS) $(EXEC) $(TEST_EXEC)
+	rm -f $(OBJS) $(TEST_OBJS) $(EXEC) $(TEST_EXECS)
 
 .PHONY: all test clean
 
