@@ -1,16 +1,16 @@
-#include "colaGenerica.hpp"
-#include "coleccionMon.hpp"
-#include "informe.hpp"
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
+#include "colaGenerica.hpp"
+#include "coleccionMon.hpp"
+#include "informe.hpp"
 
 using namespace std;
 
 void opcionA(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listado){
   //Variables necesarias
   string desc, numAsStr;
-  long num;
+  long int num;
   informe informe;
   //Leer del fichero
   getline(f,numAsStr);
@@ -42,6 +42,7 @@ void opcionC(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listado
 
   if(esta(listado, num)){
     obtenerVal(listado, num, nuevoInforme);
+    registrarConsulta(listado, num); // FIX: Con dudas sobre si en este caso queremos registrar una consulta
     cambiarDescripcion(desc, nuevoInforme);
     registrarComentario(coment, nuevoInforme);
     actualizar(listado, num, nuevoInforme);
@@ -106,7 +107,31 @@ void opcionLI(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listad
   num = stoi(numAsStr);
 
   if(esta(listado, num)){
-    of << "****INFORME: " << num;
+    informe miInforme;
+    obtenerVal(listado, num, miInforme);
+    registrarConsulta(listado, num);
+    of << "****INFORME: " << num << endl;
+    of << descripcion(miInforme) << endl;
+    of << comentarios(miInforme) << endl;
+    of << "****TOTALES: Act->( " << obtenerNumActu(listado, num) << " ) Cons->( " << obtenerNumCons(listado, num) << " ) Coment->( " << comentariosRegistrados(miInforme) << " )" << endl;
+  }
+  else{
+    of << "****DESCONOCIDO" << endl;
+  }
+}
+
+void opcionLT(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listado){
+  of << "-----LISTADO:" << endl;
+  iniciarIterador(listado);
+  while(existeSiguiente(listado)){
+    informe miInforme;
+    long int num;
+    siguienteIdent(listado, num);
+    obtenerVal(listado, num,  miInforme);
+    of << "[ " << num << " ;;; " << siguienteNumActu(listado) << " ;;; " << siguienteNumCons(listado)
+    << " ] --- ( " << comentariosRegistrados(miInforme) << " ) --- " << descripcion(miInforme)
+    << " --- " << endl;
+    of << "-----";
   }
 }
 

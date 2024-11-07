@@ -1,5 +1,5 @@
 #include "informe.hpp"
-#include<iostream>
+#include <string>
 
 using namespace std;
 
@@ -37,12 +37,19 @@ string comentarios(informe& i){
     else {
       iniciarIterador(i.comentarios);
       primero(i.comentarios,comment);
-      resultado = comment;
+      resultado += "[ 1 --> ";
+      resultado += comment;
+      resultado += " ---];;";
+      int iter = 2;
       while(existeSiguiente(i.comentarios)){
         siguiente(i.comentarios,comment);
-        resultado += comment;  
+        resultado += "[ ";
+        resultado += to_string(iter);
+        resultado += " --> ";
+        resultado += comment;
+        resultado += " ---];;";
         avanza(i.comentarios);
-
+        iter++;
       }
 
       return resultado;

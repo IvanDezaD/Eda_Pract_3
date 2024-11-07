@@ -30,22 +30,22 @@ template<typename M, typename I> int obtenerNumCons(coleccionMon<M,I> &m, const 
 
 template<typename M, typename I> void registrarConsulta(const coleccionMon<M,I> &m, const M &iden);
 
-//template<typename M, typename I> void borrar(coleccionMon<M,I>, const M &iden);
+template<typename M, typename I> void borrar(coleccionMon<M,I>, const M &iden);
 
 //Faltan por añadir las del iterador
-//template<typename M, typename I> void iniciarIterador(coleccionMon<M,I> &m);
+template<typename M, typename I> void iniciarIterador(coleccionMon<M,I> &m);
 
-//template<typename M, typename I> bool existeSiguiente(coleccionMon<M,I> &m);
+template<typename M, typename I> bool existeSiguiente(coleccionMon<M,I> &m);
 
-//template<typename M, typename I> void siguienteIdent(coleccionMon<M,I> &m, M &iden);
+template<typename M, typename I> void siguienteIdent(coleccionMon<M,I> &m, M &iden);
 
-//template<typename M, typename I> void siguienteVal(coleccionMon<M,I> &m, I &val);
+template<typename M, typename I> void siguienteVal(coleccionMon<M,I> &m, I &val);
 
-//template<typename M, typename I> int siguienteNumActu(coleccionMon<M,I> &m);
+template<typename M, typename I> int siguienteNumActu(coleccionMon<M,I> &m);
 
-//template<typename M, typename I> int siguienteNumCons(coleccionMon<M,I> &m);
+template<typename M, typename I> int siguienteNumCons(coleccionMon<M,I> &m);
 
-//template<typename M, typename I> bool avanza(coleccionMon<M,I> &m);
+template<typename M, typename I> bool avanza(coleccionMon<M,I> &m);
 
 
 
@@ -61,15 +61,15 @@ struct coleccionMon{
   friend int obtenerNumActu<M,I>(coleccionMon<M,I> &m, const M &iden);
   friend int obtenerNumCons<M,I>(coleccionMon<M,I> &m, const M &iden);
   friend void registrarConsulta<M,I>(const coleccionMon<M,I> &m, const M &iden);
-  //friend void borrar<M,I>(coleccionMon<M,I> &m, const M &iden);
+  friend void borrar<M,I>(coleccionMon<M,I> &m, const M &iden);
   //Operaciones basicas del iterador
-  //friend void iniciarIterador<M,I>(coleccionMon<M,I> &m);
-  //friend bool existeSiguiente<M,I>(coleccionMon<M, I> &m);
-  //friend void siguienteIdent<M,I>(coleccionMon<M, I> &m, M &iden);
-  //friend void siguienteVal<M,I>(coleccionMon<M, I> &m, I &val);
-  //friend int siguienteNumActu<M,I>(coleccionMon<M, I> &m);
-  //friend int siguienteNumCons<M,I>(coleccionMon<M, I> &m);
-  //friend void avanza<M,I>(coleccionMon<M, I> &m);
+  friend void iniciarIterador<M,I>(coleccionMon<M,I> &m);
+  friend bool existeSiguiente<M,I>(coleccionMon<M, I> &m);
+  friend void siguienteIdent<M,I>(coleccionMon<M, I> &m, M &iden);
+  friend void siguienteVal<M,I>(coleccionMon<M, I> &m, I &val);
+  friend int siguienteNumActu<M,I>(coleccionMon<M, I> &m);
+  friend int siguienteNumCons<M,I>(coleccionMon<M, I> &m);
+  friend void avanza<M,I>(coleccionMon<M, I> &m);
 
   struct nodo {
     M iden;
