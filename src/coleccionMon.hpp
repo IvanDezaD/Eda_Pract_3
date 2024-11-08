@@ -30,7 +30,7 @@ template<typename M, typename I> int obtenerNumCons(coleccionMon<M,I> &m, const 
 
 template<typename M, typename I> void registrarConsulta(const coleccionMon<M,I> &m, const M &iden);
 
-template<typename M, typename I> void borrar(coleccionMon<M,I>, const M &iden);
+template<typename M, typename I> void borrar(coleccionMon<M,I> &m, const M &iden);
 
 //Faltan por añadir las del iterador
 template<typename M, typename I> void iniciarIterador(coleccionMon<M,I> &m);

@@ -136,15 +136,46 @@ void opcionLT(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listad
 }
 
 int main(int argc, char** argv){
+
   string fichero=argv[1];
   ifstream f;
   ofstream of; //fichero de salida
+  
   f.open(fichero);
   of.open("salida.txt");
-  string instruccion; string salto;
-  while(f >> instruccion){
-    if(instruccion == "A"){
-      opcionA(f, of);
+
+  if(f.is_open()){
+
+    coleccionMon<long int, informe> listado;
+    crear(listado);
+    string instruccion; string salto;
+
+    while(f >> instruccion){
+      if(instruccion == "A"){
+        opcionA(f, of, listado);
+      }
+      else if (instruccion == "O"){
+        opcionO(f, of,  listado);
+      }
+      else if(instruccion == "E"){
+        opcionE(f, of, listado);
+      }
+      else if(instruccion == "B"){
+        opcionB(f, of, listado);
+      }
+      else if(instruccion == "C") {
+        opcionC(f,of,listado);
+      }
+      else if(instruccion == "LT") {
+        opcionLT(f,of,listado);
+      }
+      else if(instruccion == ""){
+        opcionLI(f,of,listado);
+      }
     }
+    borrar(listado);
+  }
+  else{
+    cout << "NO SE HA PODIDO ENCONTRAR EL FICHERO" << endl;
   }
 }
