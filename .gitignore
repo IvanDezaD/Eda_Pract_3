@@ -1,2 +1,4 @@
-P3_entrada_salida_hendrix/
-
+P3_entrada_salida_hendrix/*
+*.o
+main
+target/*
