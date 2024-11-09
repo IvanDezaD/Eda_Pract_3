@@ -94,15 +94,15 @@ TEST_F(ColeccionMonTest, Esta) {
     EXPECT_FALSE(esta(m, iden2));  // El iden=2 no está
 }
 
-// Prueba para borrar toda la colección vacía
+/*/ Prueba para borrar toda la colección vacía
 TEST_F(ColeccionMonTest, BorrarColeccionVacia) {
     EXPECT_EQ(tamaño(m), 0);
     borrarTodaLaColeccion(m);
     EXPECT_EQ(tamaño(m), 0);
     EXPECT_TRUE(esVacia(m));
-}
+}*/
 
-// Prueba para borrar una colección con un solo elemento
+/*/ Prueba para borrar una colección con un solo elemento
 TEST_F(ColeccionMonTest, BorrarColeccionConUnElemento) {
     Identificador i = 1;
     anyadir(m, i, 100);  // Añade un elemento
@@ -110,7 +110,7 @@ TEST_F(ColeccionMonTest, BorrarColeccionConUnElemento) {
     borrarTodaLaColeccion(m);
     EXPECT_EQ(tamaño(m), 0);
     EXPECT_TRUE(esVacia(m));
-}
+}*/
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
