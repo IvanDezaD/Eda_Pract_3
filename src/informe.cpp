@@ -56,3 +56,8 @@ string comentarios(informe& i){
 
     }
 }
+
+void liberar(informe &i){
+  i.descrip.clear();
+  liberar(i.comentarios);
+}

@@ -1,6 +1,5 @@
 #include "../src/coleccionMon.hpp"  // Incluye tu código principal aquí
 #include <gtest/gtest.h>
-#include <benchmark/benchmark.h>
 
 // Define el tipo para el identificador (por ejemplo, `long`) y el valor (`int` en este caso).
 using Identificador = long;
@@ -33,7 +32,7 @@ TEST_F(ColeccionMonTest, AnyadirElemento) {
 
 // Prueba para evitar duplicados
 TEST_F(ColeccionMonTest, NoDuplicarElementos) {
-  long int iden = 1;
+    long int iden = 1;
     anyadir(m, iden, 100);
     anyadir(m, iden, 200);  // Intento de duplicado
     EXPECT_EQ(tamaño(m), 1);  // El tamaño debe seguir siendo 1
@@ -56,11 +55,11 @@ TEST_F(ColeccionMonTest, ActualizarElemento) {
 TEST_F(ColeccionMonTest, ObtenerNumeroDeActualizaciones) {
     Identificador iden = 1;
     anyadir(m, iden, 100);
-    EXPECT_EQ(obtenerNumActu(m, iden), 0);  // Sin actualizaciones todavía
+    EXPECT_EQ(obtenerNumActu(m, iden), 1);  // Añadir representa una actualizacion
     actualizar(m, iden, 200);
-    EXPECT_EQ(obtenerNumActu(m, iden), 1);  // Se ha actualizado una vez
+    EXPECT_EQ(obtenerNumActu(m, iden), 2);  // Se ha actualizado una vez
     actualizar(m, iden, 300);
-    EXPECT_EQ(obtenerNumActu(m, iden), 2);  // Dos actualizaciones
+    EXPECT_EQ(obtenerNumActu(m, iden), 3);  // Dos actualizaciones
 }
 
 // Prueba para verificar obtenerNumCons
@@ -68,7 +67,6 @@ TEST_F(ColeccionMonTest, ObtenerNumeroDeConsultas) {
     Identificador iden = 1;
     anyadir(m, iden, 100);
     EXPECT_EQ(obtenerNumCons(m, iden), 0);  // Ninguna consulta aún
-    Valor val;
     registrarConsulta(m, iden);
     EXPECT_EQ(obtenerNumCons(m, iden), 1);  // Después de una consulta
     registrarConsulta(m, iden);
@@ -96,78 +94,27 @@ TEST_F(ColeccionMonTest, Esta) {
     EXPECT_FALSE(esta(m, iden2));  // El iden=2 no está
 }
 
-static void BenchmarkAnyadir(benchmark::State& state) {
-    coleccionMon<Identificador, Valor> m;
-    crear(m);
-    Identificador iden = 1;
-    for (auto _ : state) {
-        for (Identificador i = 0; i < state.range(0); ++i) {
-            anyadir(m, i, (int)i * 10);  // Añadir elementos
-        }
-    }
+// Prueba para borrar toda la colección vacía
+TEST_F(ColeccionMonTest, BorrarColeccionVacia) {
+    EXPECT_EQ(tamaño(m), 0);
+    borrarTodaLaColeccion(m);
+    EXPECT_EQ(tamaño(m), 0);
+    EXPECT_TRUE(esVacia(m));
 }
-//BENCHMARK(BenchmarkAnyadir)->Arg(1000)->Arg(5000)->Arg(10000)->Iterations(10); // Prueba con diferentes tamaños
 
-// Benchmark para actualizar elementos en la colección
-static void BenchmarkActualizar(benchmark::State& state) {
-    coleccionMon<Identificador, Valor> m;
-    crear(m);
-    // Prepara la colección con `n` elementos
-    for (Identificador i = 0; i < state.range(0); ++i) {
-        anyadir(m, i, (int)i * 10);
-    }
-
-    for (auto _ : state) {
-        for (Identificador i = 0; i < state.range(0); ++i) {
-            actualizar(m, i, (int)i * 20);  // Actualiza cada elemento
-        }
-    }
+// Prueba para borrar una colección con un solo elemento
+TEST_F(ColeccionMonTest, BorrarColeccionConUnElemento) {
+    Identificador i = 1;
+    anyadir(m, i, 100);  // Añade un elemento
+    EXPECT_EQ(tamaño(m), 1);
+    borrarTodaLaColeccion(m);
+    EXPECT_EQ(tamaño(m), 0);
+    EXPECT_TRUE(esVacia(m));
 }
-//BENCHMARK(BenchmarkActualizar)->Arg(1000)->Arg(5000)->Arg(10000)->Iterations(10);
-
-// Benchmark para buscar elementos en la colección
-static void BenchmarkEsta(benchmark::State& state) {
-    coleccionMon<Identificador, Valor> m;
-    crear(m);
-    // Prepara la colección con `n` elementos
-    for (Identificador i = 0; i < state.range(0); ++i) {
-        anyadir(m, i, (int)i * 10);
-    }
-
-    for (auto _ : state) {
-        for (Identificador i = 0; i < state.range(0); ++i) {
-            benchmark::DoNotOptimize(esta(m, i));  // Buscar cada elemento
-        }
-    }
-}
-BENCHMARK(BenchmarkEsta)->Arg(2)->Arg(5)->Arg(10)->Iterations(1);
-
-// Benchmark para obtener el valor de un elemento en la colección
-static void BenchmarkObtenerVal(benchmark::State& state) {
-    coleccionMon<Identificador, Valor> m;
-    crear(m);
-    // Prepara la colección con `n` elementos
-    for (Identificador i = 0; i < state.range(0); ++i) {
-        anyadir(m, i, (int)i * 10);
-    }
-
-    Valor val;
-    for (auto _ : state) {
-        for (Identificador i = 0; i < state.range(0); ++i) {
-            benchmark::DoNotOptimize(obtenerVal(m, i, val));  // Obtener valor de cada elemento
-        }
-    }
-}
-BENCHMARK(BenchmarkObtenerVal)->Arg(1)->Arg(5)->Arg(10)->Iterations(1);
-
 
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   int test_result = RUN_ALL_TESTS();
-  
-  ::benchmark::Initialize(&argc, argv);  // Inicializa Google Benchmark
-  if (::benchmark::ReportUnrecognizedArguments(argc, argv)) return 1;
-  ::benchmark::RunSpecifiedBenchmarks();
   
   return test_result;
 }
