@@ -23,3 +23,39 @@ Es la siguiente:
 
 ```
 Con esto, somos capaces de saber que no estamos cometiendo ningún fallo de memoria en el programa.
+
+## Comprobación del funcionamiento del programa
+Para comprobar que el programa funciona, hemos creado un pequeño script que lo que hace es ejecutar el programa, hacer un diff de la salida esperada y la salida obtenida, y si el diff esta vacío 
+confirma que el programa es correcto. En cualquier otro caso, se indica que el programa no es correcto, y muestra las diferencias obtenidas.
+El script es el siguiente:
+```bash
+#!/bin/bash 
+
+ function executeProgram(){
+   make > /dev/null 2>&1
+  target/main P3_entrada_salida_hendrix/entrada.txt
+}
+
+function findDiferencias(){
+  local diferencias=$(diff P3_entrada_salida_hendrix/salida.txt salida.txt)
+  if [[ $? -eq 0 ]]; then
+    echo "El programa se ha ejecutado con exito!"
+  else
+    echo "Se han encontrado diferencias entre el fichero de entrada y de salida"
+    echo "$diferencias"
+  fi
+}
+
+function deleteShit(){
+  rm salida.txt 
+}
+
+main(){
+  executeProgram
+  findDiferencias
+  deleteShit
+}
+
+main
+```
+
