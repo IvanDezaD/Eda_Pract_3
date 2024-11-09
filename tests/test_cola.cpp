@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <benchmark/benchmark.h>
 #include "../src/colaGenerica.hpp"
 
 //En los 3 primeros tests se prueban las funciones encolar, desencolar, longitud y primero
@@ -15,7 +14,6 @@ TEST(encolar, encolaCorrectamente){
   int dato1 = 0;
   int dato2 = 1;
   int datoRes1;
-  int datoRes2;
   crear(c);
   encolar(c, dato1);
   EXPECT_EQ(longitud(c), 1);
@@ -30,7 +28,6 @@ TEST(desencolar, desencolaCorrectamente){
   int dato1 = 0;
   int dato2 = 1;
   int datoRes1;
-  int datoRes2;
   crear(c);
   encolar(c, dato1);
   encolar(c, dato2);
@@ -81,68 +78,9 @@ TEST(liberar, liberaCorrectamente){
   EXPECT_EQ(longitud(c), 0);
 }
 
-//Funcion de benchmark para probar el rendimiento de la implementacion.
-static void BM_ColaEncolarDesenencolar(benchmark::State& state) {
-    cola<int> c;
-    crear(c);
-
-    int num_elements = state.range(0); // Número de elementos que añadiremos y eliminaremos en la cola
-
-    // Benchmark para encolar y desencolar elementos
-    for (auto _ : state) {
-        // Encolar elementos
-        for (int i = 0; i < num_elements; ++i) {
-            encolar(c, i);
-        }
-
-        // Desencolar elementos
-        while (!esVacia(c)) {
-            desenencolar(c);
-        }
-    }
-
-    // Reporte del contador de elementos procesados
-    state.SetItemsProcessed(state.iterations() * num_elements * 2); // x2 por encolar y desencolar
-}
-
-static void BM_ColaEncolarLiberar(benchmark::State& state) {
-    cola<int> c;
-    crear(c);
-
-    int num_elements = state.range(0); // Número de elementos que añadiremos y eliminaremos en la cola
-
-    // Benchmark para encolar y desencolar elementos
-    for (auto _ : state) {
-        // Encolar elementos
-        for (int i = 0; i < num_elements; ++i) {
-            encolar(c, i);
-        }
-
-        // liberar la memoria
-        liberar(c);
-    }
-
-    // Reporte del contador de elementos procesados
-    state.SetItemsProcessed(state.iterations() * num_elements * 2); // x2 por encolar y desencolar
-}
-
-
-// Registramos el benchmark para probar con diferentes tamaños de cola
-BENCHMARK(BM_ColaEncolarDesenencolar)->Arg(1000)->Arg(5000)->Arg(10000)->Arg(100000);
-BENCHMARK(BM_ColaEncolarLiberar)->Arg(1000)->Arg(5000)->Arg(10000)->Arg(100000);
-
-
 int main(int argc, char** argv) {
   ::testing::InitGoogleTest(&argc, argv);
   int test_result = RUN_ALL_TESTS();
-
-  printf("\n\n\n\n\n\n");
-  printf("\033[1;34mEjecutando Benchmarks de las Funciones Principales\033[0m\n");
-
-  ::benchmark::Initialize(&argc, argv);
-  if(::benchmark::ReportUnrecognizedArguments(argc, argv)) return 1;
-  ::benchmark::RunSpecifiedBenchmarks();
-
 
     return test_result;
 }

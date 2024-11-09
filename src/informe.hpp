@@ -34,6 +34,12 @@ void registrarComentario(string coment, informe& i);
 //Si el informe i no tiene ningún comentario registrado la cadena resultado será la cadena vacía
 string comentarios(informe& i);
 
+/*
+ * Dado un informe, se libera toda la memoria ocupada, tanto la que ocupa la descripcion como la que ocupa 
+ * la cola<C>.
+ * */
+void liberar(informe &i);
+
 struct informe{
     friend void crearInforme(string descrip, informe& i);
     friend string descripcion(informe& i);
@@ -41,6 +47,7 @@ struct informe{
     friend int comentariosRegistrados(informe& i);
     friend void registrarComentario(string coment, informe& i);
     friend string comentarios(informe& i);
+    friend void liberar(informe& i);
     private:
 
     string descrip;

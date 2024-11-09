@@ -39,7 +39,7 @@ TEST_F(InformeTest, ConcatenarComentarios) {
     registrarComentario("Comentario 2", i);
     registrarComentario("Comentario 3", i);
 
-    string expected = "Comentario 1Comentario 2Comentario 3";
+    string expected = "[ 1 --> Comentario 1 ---];;[ 2 --> Comentario 2 ---];;[ 3 --> Comentario 3 ---];;";
     EXPECT_EQ(comentarios(i), expected);  // Verifica que los comentarios se concatenan correctamente
 }
 
@@ -51,7 +51,7 @@ TEST_F(InformeTest, SinComentarios) {
 
 
 int main(int argc, char **argv) {
-    printf("Corriendo tests del informe\n")
+    printf("Corriendo tests del informe\n");
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
