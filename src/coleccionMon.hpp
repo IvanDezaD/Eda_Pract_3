@@ -289,7 +289,7 @@ void borrarTodaLaColeccion(coleccionMon<M, I> &m) {
     while (aux != nullptr) {
         temp = aux->siguiente;  // Guarda el siguiente nodo
         liberarLong(aux->iden); // Libera la memoria del identificador (si es necesario)
-        //liberar(aux->val);      // Libera la memoria del valor (si es necesario)
+        liberar(aux->val);      // Libera la memoria del valor (si es necesario)
         delete aux;             // Elimina el nodo actual
         aux = temp;             // Avanza al siguiente nodo
     }
