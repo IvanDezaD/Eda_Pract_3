@@ -127,7 +127,7 @@ void opcionLI(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listad
   }
 }
 
-void opcionLT(ifstream &f, ofstream &of, coleccionMon<long int, informe> &listado){
+void opcionLT(ofstream &of, coleccionMon<long int, informe> &listado){
   //Declaracion de variables
   informe miInforme;
   long int num;
@@ -184,7 +184,7 @@ int main(int argc, char** argv){
         opcionC(f,of,listado);
       }
       else if(instruccion == "LT") {
-        opcionLT(f,of,listado);
+        opcionLT(of,listado);
       }
       else if(instruccion == "LI"){
         opcionLI(f,of,listado);
