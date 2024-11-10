@@ -82,8 +82,8 @@ template <typename M, typename I> struct coleccionMon {
   int numElementos;
 };
 
-void liberarLong(long int i){
-  return;
+void liberar(long int){
+  //return;
 }
 
 template <typename M, typename I> void crear(coleccionMon<M, I> &m) {
@@ -253,7 +253,7 @@ void borrar(coleccionMon<M,I> &m, const M &iden){
   if (!(iden < m.primero->iden)){
     if (m.primero->iden == iden){
       m.primero = m.primero->siguiente;
-      liberarLong(aux->iden);
+      liberar(aux->iden);
       liberar(aux->val);
       delete aux;
       m.numElementos--;
@@ -267,7 +267,7 @@ void borrar(coleccionMon<M,I> &m, const M &iden){
         }else if(aux->iden == iden){
           aux2->siguiente = aux->siguiente;
           parar=true;
-          liberarLong(aux->iden);
+          liberar(aux->iden);
           liberar(aux->val);
           delete aux;
           m.numElementos--;
@@ -288,7 +288,7 @@ void borrarTodaLaColeccion(coleccionMon<M, I> &m) {
 
     while (aux != nullptr) {
         temp = aux->siguiente;  // Guarda el siguiente nodo
-        liberarLong(aux->iden); // Libera la memoria del identificador (si es necesario)
+        liberar(aux->iden); // Libera la memoria del identificador (si es necesario)
         liberar(aux->val);      // Libera la memoria del valor (si es necesario)
         delete aux;             // Elimina el nodo actual
         aux = temp;             // Avanza al siguiente nodo
