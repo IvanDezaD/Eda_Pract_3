@@ -8,41 +8,60 @@
 
 // Ident es un long para identificar. Podemos usar la cola generica.
 
+
+
 template <typename M, typename I> struct coleccionMon;
 
+//Funcion para crear una coleccion vacia
 template <typename M, typename I> void crear(coleccionMon<M, I> &m);
 
+//Funcion para obtener el tamaño de la coleccion m
 template <typename M, typename I> int tamaño(const coleccionMon<M, I> &m);
 
+//Funcion para saber si la coleccion esta vacia
 template <typename M, typename I> bool esVacia(const coleccionMon<M, I> &m);
 
+//Añade un par identificador-valor a la coleccion. Si ya existe el identificador, no hace nada
 template <typename M, typename I>
 void anyadir(coleccionMon<M, I> &m, const M &iden, const I &val);
 
+//Actualiza el valor asociado a un identificador. Si no existe el identificador, devuelve false
 template <typename M, typename I>
 bool actualizar(coleccionMon<M, I> &m, const M &iden, const I &val);
 
+//Devuelve true si el identificador esta en la coleccion
 template <typename M, typename I>
 bool esta(const coleccionMon<M, I> &m, const M &iden);
 
+
+//Devuelve el valor asociado a un identificador. Si no existe el identificador, devuelve false
 template <typename M, typename I>
 bool obtenerVal(const coleccionMon<M, I> &m, const M &iden, I &val);
 
+//Devuelve el numero de actualizaciones de un identificador. Si no existe el identificador, devuelve -1
 template <typename M, typename I>
 int obtenerNumActu(coleccionMon<M, I> &m, const M &iden);
 
+//Devuelve el numero de consultas de un identificador. Si no existe el identificador, devuelve -1
 template <typename M, typename I>
 int obtenerNumCons(coleccionMon<M, I> &m, const M &iden);
 
+//Registra una consulta de un identificador dado. Si no existe el identificador, devuelve false
 template <typename M, typename I> bool registrarConsulta(const coleccionMon<M, I> &m, const M &iden);
 
+//Borra un identificador de la coleccion. Si no existe el identificador, no hace nada
 template<typename M, typename I> void borrar(coleccionMon<M,I> &m);
 
-// Faltan por añadir las del iterador
+//Funciones del iterador
+
+//Funcion que inicializa el iterador para recorrer la coleccion, donde el siguiente nodo a visitar es el de iden menor a los demas
 template<typename M, typename I> void iniciarIterador(coleccionMon<M,I> &m);
 
+//Funcion que devuelve true si existe un siguiente nodo a visitar
 template<typename M, typename I> bool existeSiguiente(coleccionMon<M,I> &m);
 
+//Funcion que devuelve el siguiente nodo a visitar, incluyendo el identificador, el valor, el numero de actualizaciones y el numero de consultas
+//Ademas, avanza el iterador al siguiente nodo
 template<typename M, typename I> bool siguienteYAvanza(coleccionMon<M,I> &m, M &iden, I &val, int &numActu, int &numCons);
 
 // El tipo de dato M requerira tener las funciones:
