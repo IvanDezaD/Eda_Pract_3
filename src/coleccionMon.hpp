@@ -6,10 +6,6 @@
 #include "colaGenerica.hpp"
 #include <stdlib.h>
 
-// Ident es un long para identificar. Podemos usar la cola generica.
-
-
-
 template <typename M, typename I> struct coleccionMon;
 
 //Funcion para crear una coleccion vacia
@@ -102,7 +98,6 @@ template <typename M, typename I> struct coleccionMon {
 };
 
 void liberar(long int){
-  //return;
 }
 
 template <typename M, typename I> void crear(coleccionMon<M, I> &m) {
@@ -138,8 +133,6 @@ void anyadir(coleccionMon<M, I> &m, const M &iden, const I &val) {
   if(aux->iden == iden){
     return;
   }
-
-  
 
   // Si el nuevo elemento debe ir al principio
   if (iden < aux->iden) {
@@ -184,7 +177,7 @@ bool actualizar(coleccionMon<M, I> &m, const M &iden, const I &newVal) {
       aux->val = newVal;
       aux->numActu++;
       success = true;
-      return success; // Para salir antes de la funcion ahorrando tiempo
+      return success;
     }
     aux = aux->siguiente;
   }

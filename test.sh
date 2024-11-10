@@ -1,7 +1,10 @@
 #!/bin/bash 
 
  function executeProgram(){
-   make > /dev/null 2>&1
+  make > /dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
+    echo "Ha habido un fallo compilando el ejecutable"
+  fi
   target/main P3_entrada_salida_hendrix/entrada.txt
 }
 
