@@ -7,26 +7,39 @@
 
 template<typename C> struct cola;
 
+//Crea una cola vacia
 template<typename C> void crear(cola<C> &c);
 
+
+//Añade un elemento a la cola c al final
 template<typename C> void encolar(cola<C> &c, const C& e);
 
+//Devuelve el primer elemento de la cola c en e. Devuelve false si la cola esta vacia
 template<typename C> bool primero(const cola<C> &c, C& e);
 
+//Devuelve true si la cola c esta vacia
 template<typename C> bool esVacia(const cola<C> &c);
 
+//Elimina el primer elemento de la cola c, si no esta vacia. Si la cola esta vacia no hace nada
 template<typename C> void desenencolar(cola<C> &c);
 
+//Devuelve el numero de elementos de la cola c
 template<typename C> int longitud(const cola<C> &c);
 
+
+//Creacion de un iterador para la cola para recorrerla. El iterador se inicializa en el primer elemento de la cola
 template<typename C> void iniciarIterador(cola<C> &c);
 
+//Devuelve true si existe un siguiente elemento en la cola
 template<typename C> bool existeSiguiente(const cola<C> &c);
 
+//Devuelve el siguiente elemento de la cola en e.
 template<typename C> void siguiente(const cola<C> &c, C& e);
 
+//Avanza el iterador al siguiente elemento de la cola
 template<typename C> void avanza(cola<C> &c);
 
+//Libera la memoria de la cola
 template<typename C> void liberar(cola<C> &c);
 
 
